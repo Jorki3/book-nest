@@ -1,7 +1,6 @@
 <script lang="ts">
   import { invalidate } from "$app/navigation";
   import { Header } from "$components";
-  import { onMount } from "svelte";
   import "./../app.css";
 
   let { data, children } = $props();
@@ -16,8 +15,6 @@
 
     return () => data.subscription.unsubscribe();
   });
-
-  $inspect(session);
 </script>
 
 <Header />
