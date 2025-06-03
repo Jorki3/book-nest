@@ -1,6 +1,5 @@
-import { error } from "@sveltejs/kit";
-import type { Action } from "./$types";
-
+import { fail, redirect } from "@sveltejs/kit";
+import { supabase } from "$lib/supabaseClient";
 interface ReturnObject {
   success: boolean;
   errors: string[];
@@ -39,5 +38,17 @@ export const actions = {
       returnObject.success = false;
       return returnObject;
     }
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    if (error || !data.user) {
+      returnObject.success = true;
+      return fail(400, returnObject as any);
+    }
+
+    redirect(303, "private/dashboard");
   },
 };
