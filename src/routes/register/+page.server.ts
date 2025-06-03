@@ -1,12 +1,11 @@
 import { fail, redirect } from "@sveltejs/kit";
-import { supabase } from "$lib/supabaseClient";
 interface ReturnObject {
   success: boolean;
   errors: string[];
 }
 
 export const actions = {
-  default: async ({ request }) => {
+  default: async ({ request, locals: { supabase } }) => {
     const formData = await request.formData();
     const name = formData.get("name") as string;
     const email = formData.get("email") as string;
